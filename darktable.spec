@@ -15,6 +15,7 @@ BuildRequires:	dbus-glib-devel
 BuildRequires:	exiv2-devel
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel
+BuildRequires:	intltool
 BuildRequires:	lcms-devel
 BuildRequires:	lensfun-devel
 BuildRequires:	libglade2-devel
@@ -23,6 +24,7 @@ BuildRequires:	libgomp-devel
 BuildRequires:	libgphoto2-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
+BuildRequires:	pkgconfig
 BuildRequires:	sqlite3-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
