@@ -26,6 +26,7 @@ BuildRequires:	flickcurl-devel
 BuildRequires:	fop
 BuildRequires:	gettext
 BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+2-devel
 BuildRequires:	intltool
