@@ -59,7 +59,7 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 
 %prep
 %setup -q
-%patch0
+%patch0 -p1
 
 %build
 install -d build
