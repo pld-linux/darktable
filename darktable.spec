@@ -11,6 +11,7 @@ License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.gz
 # Source0-md5:	9ad88a1a6b9761fce28c8073d8f47941
+Patch0:		cmake-glib.patch
 URL:		http://darktable.sourceforge.net/
 BuildRequires:	GConf2
 BuildRequires:	GConf2-devel
@@ -58,6 +59,7 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 
 %prep
 %setup -q
+%patch0
 
 %build
 install -d build
