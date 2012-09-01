@@ -1,0 +1,11 @@
+--- darktable-1.0.5/src/iop/watermark.c~	2012-07-21 13:44:08.000000000 +0300
++++ darktable-1.0.5/src/iop/watermark.c	2012-09-01 23:32:58.391794753 +0300
+@@ -38,7 +38,7 @@
+ #include <inttypes.h>
+ 
+ #include <librsvg/rsvg.h>
+-#include <librsvg/rsvg-cairo.h>
++#include <cairo.h>
+ 
+ #include "common/metadata.h"
+ #include "common/utility.h"
