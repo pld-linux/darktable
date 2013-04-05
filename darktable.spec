@@ -6,7 +6,7 @@ Summary:	darktable is a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
 Version:	1.1.4
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
@@ -83,6 +83,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
+
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
 
 %find_lang %{name} --with-gnome --with-omf
 
