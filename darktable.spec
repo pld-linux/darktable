@@ -5,18 +5,18 @@
 Summary:	darktable is a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	1.0.5
-Release:	3
+Version:	1.1.4
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
-Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.gz
-# Source0-md5:	9ad88a1a6b9761fce28c8073d8f47941
+Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
+# Source0-md5:	49e376ca4b88f5351acacef177285c45
 Patch0:		cmake-glib.patch
-Patch1:		librsvg-headers.patch
+Patch1:		openexr2.patch
 URL:		http://darktable.sourceforge.net/
 BuildRequires:	GConf2
 BuildRequires:	GConf2-devel
-BuildRequires:	OpenEXR-devel >= 1.6
+BuildRequires:	OpenEXR-devel >= 2.0
 BuildRequires:	SDL-devel
 BuildRequires:	cairo-devel
 BuildRequires:	cmake
@@ -103,6 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/README doc/AUTHORS doc/LICENSE doc/TRANSLATORS
 %attr(755,root,root) %{_bindir}/darktable
+%attr(755,root,root) %{_bindir}/darktable-cli
 %attr(755,root,root) %{_bindir}/darktable-cltest
 %attr(755,root,root) %{_bindir}/darktable-viewer
 %{_datadir}/darktable
