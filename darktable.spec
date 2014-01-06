@@ -5,21 +5,22 @@
 Summary:	darktable is a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	1.2
-Release:	3
+Version:	1.4
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
-# Source0-md5:	31bfd13d4786aac4f99d5155a811602b
+# Source0-md5:	896416931ded4579f528cd11edad470c
 Patch0:		cmake-glib.patch
-Patch1:		openexr2.patch
 URL:		http://darktable.sourceforge.net/
 BuildRequires:	GConf2
 BuildRequires:	GConf2-devel
+BuildRequires:	GraphicsMagick-devel
 BuildRequires:	OpenEXR-devel >= 2.0
 BuildRequires:	SDL-devel
 BuildRequires:	cairo-devel
 BuildRequires:	cmake
+BuildRequires:	colord-devel
 BuildRequires:	curl-devel >= 7.18.0
 BuildRequires:	dbus-glib-devel >= 0.80
 BuildRequires:	desktop-file-utils
@@ -42,6 +43,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 1:2.26
 BuildRequires:	libtiff-devel
+BuildRequires:	lua52-devel
 BuildRequires:	pkgconfig >= 0.22
 BuildRequires:	sqlite-devel
 BuildRequires:	sqlite3-devel
@@ -61,7 +63,6 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 install -d build
@@ -108,10 +109,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/darktable-cli
 %attr(755,root,root) %{_bindir}/darktable-cltest
 %attr(755,root,root) %{_bindir}/darktable-viewer
+%{_datadir}/appdata/darktable.appdata.xml
 %{_datadir}/darktable
 %{_desktopdir}/darktable.desktop
 %{_iconsdir}/hicolor/*/apps/darktable.png
-%{_iconsdir}/hicolor/scalable/apps/darktable.svg
+%{_iconsdir}/hicolor/scalable/apps/darktable*.svg
 %dir %{_libdir}/darktable
 %dir %{_libdir}/darktable/plugins
 %dir %{_libdir}/darktable/plugins/imageio
@@ -125,4 +127,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/darktable/plugins/imageio/storage/*.so
 %attr(755,root,root) %{_libdir}/darktable/plugins/lighttable/*.so
 %attr(755,root,root) %{_libdir}/darktable/views/*.so
-%{_mandir}/man1/darktable.*
+%{_mandir}/man1/darktable.1*
+%{_mandir}/man1/darktable-cli.1*

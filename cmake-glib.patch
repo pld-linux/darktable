@@ -1,9 +1,9 @@
 --- darktable-1.0.5/./cmake/modules/FindGlib.cmake~	2012-07-21 13:44:08.000000000 +0300
 +++ darktable-1.0.5/./cmake/modules/FindGlib.cmake	2012-08-28 21:05:30.233854241 +0300
-@@ -21,7 +21,7 @@
- find_path(GlibConfig_INCLUDE_DIR
+@@ -51,7 +51,7 @@
    NAMES glibconfig.h
-   PATHS ${Glib_PKGCONF_INCLUDE_DIRS} /usr
+   HINTS ${Glib_PKGCONF_INCLUDE_DIRS}
+   PATHS /usr
 -  PATH_SUFFIXES lib/glib-2.0/include ../lib/glib-2.0/include
 +  PATH_SUFFIXES lib64/glib-2.0/include lib/glib-2.0/include ../lib/glib-2.0/include
  )
