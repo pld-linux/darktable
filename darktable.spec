@@ -6,15 +6,13 @@ Summary:	darktable is a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
 Version:	1.4
-Release:	3
+Release:	4
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
 # Source0-md5:	896416931ded4579f528cd11edad470c
 Patch0:		cmake-glib.patch
 URL:		http://darktable.sourceforge.net/
-BuildRequires:	GConf2
-BuildRequires:	GConf2-devel
 BuildRequires:	GraphicsMagick-devel
 BuildRequires:	OpenEXR-devel >= 2.0
 BuildRequires:	SDL-devel
@@ -69,7 +67,6 @@ install -d build
 cd build
 %cmake \
 	-DCMAKE_LIBRARY_PATH:PATH=%{_libdir} \
-	-DDONT_INSTALL_GCONF_SCHEMAS:BOOLEAN=ON \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DBINARY_PACKAGE_BUILD=1 \
 	-DPROJECT_VERSION:STRING="%{name}-%{version}-%{release}" \
@@ -80,7 +77,6 @@ cd build
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
-	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
@@ -95,12 +91,10 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %update_desktop_database_post
 %update_icon_cache hicolor
-%gconf_schema_install:
 
 %postun
 %update_desktop_database_postun
 %update_icon_cache hicolor
-%gconf_schema_uninstall
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
