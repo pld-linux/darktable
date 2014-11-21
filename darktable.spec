@@ -1,23 +1,28 @@
 #
 # Conditional build:
 %bcond_without	gegl	# build without GeGL
+%bcond_without	gomp	# OpenMP threading support
+%bcond_without	opencl	# OpenCL support
+%bcond_with	vte	# lighttable mode shell ("file manager" April fool)
 
-Summary:	darktable is a virtual lighttable and darkroom for photographers
-Summary(pl.UTF-8):	darktable to wirtualny podświetlany stół i ciemnia dla fotografów
+Summary:	darktable - a virtual lighttable and darkroom for photographers
+Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	1.4
-Release:	7
+Version:	1.4.2
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
-# Source0-md5:	896416931ded4579f528cd11edad470c
+# Source0-md5:	f86554329c2c809ffb009244a6f1d643
 Patch0:		cmake-glib.patch
 URL:		http://darktable.sourceforge.net/
 BuildRequires:	GraphicsMagick-devel
+%{?with_opencl:BuildRequires:	OpenCL-devel}
 BuildRequires:	OpenEXR-devel >= 2.0
-BuildRequires:	SDL-devel
+BuildRequires:	OpenGL-devel
+BuildRequires:	SDL-devel >= 1.2
 BuildRequires:	cairo-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.6
 BuildRequires:	colord-devel
 BuildRequires:	curl-devel >= 7.18.0
 BuildRequires:	dbus-glib-devel >= 0.80
@@ -25,38 +30,54 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	exiv2-devel
 BuildRequires:	flickcurl-devel
 BuildRequires:	fop
+%{?with_gomp:BuildRequires:	gcc-c++ >= 6:4.3}
+BuildRequires:	gdk-pixbuf2-devel >= 2
+%{?with_gegl:BuildRequires:	gegl-devel}
 BuildRequires:	gettext
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel
+BuildRequires:	glib2-devel >= 1:2.30
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+2-devel >= 2:2.24
 BuildRequires:	intltool
-BuildRequires:	lcms2-devel
+BuildRequires:	json-glib-devel
+BuildRequires:	lcms2-devel >= 2
 BuildRequires:	lensfun-devel
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-keyring-devel
-BuildRequires:	libgomp-devel
+%{?with_gomp:BuildRequires:	libgomp-devel}
 BuildRequires:	libgphoto2-devel >= 2.4.5
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 1:2.26
+BuildRequires:	libsoup-devel >= 2
 BuildRequires:	libtiff-devel
-BuildRequires:	lua52-devel
-BuildRequires:	pkgconfig >= 0.22
-BuildRequires:	sqlite-devel
-BuildRequires:	sqlite3-devel
-%if %{with gegl}
-BuildRequires:	gegl-devel
-%endif
+BuildRequires:	libwebp-devel >= 0.3.0
+BuildRequires:	libxml2-devel >= 1:2.6
+BuildRequires:	libxml2-progs
+BuildRequires:	libxslt-progs
+BuildRequires:	lua52-devel >= 5.2
+BuildRequires:	openjpeg-devel >= 1.5.0
+BuildRequires:	perl-tools-pod
+BuildRequires:	pango-devel
+BuildRequires:	pkgconfig >= 1:0.22
+BuildRequires:	sqlite3-devel >= 3
+BuildRequires:	squish-devel
+%{?with_vte:BuildRequires:	vte-devel >= 0.26.0}
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
+Requires:	curl >= 7.18.0
+Requires:	dbus-glib >= 0.80
+Requires:	glib2 >= 1:2.30
+Requires:	gtk+2 >= 2:2.24
+Requires:	openjpeg >= 1.5.0
+%{?with_vte:Requires:	vte >= 0.26.0}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-darktable is a virtual lighttable and darkroom for photographers
+darktable is a virtual lighttable and darkroom for photographers.
 
 %description -l pl.UTF-8
-darktable to wirtualny podświetlany stół i ciemnia dla fotografów
+darktable to wirtualny podświetlany stół i ciemnia dla fotografów.
 
 %prep
 %setup -q
@@ -65,12 +86,12 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów
 %build
 install -d build
 cd build
-%cmake \
-	-DCMAKE_LIBRARY_PATH:PATH=%{_libdir} \
-	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-	-DBINARY_PACKAGE_BUILD=1 \
+%cmake .. \
+	%{?with_vte:-DAPRIL_FOOLS=ON} \
+	-DBINARY_PACKAGE_BUILD=ON \
 	-DPROJECT_VERSION:STRING="%{name}-%{version}-%{release}" \
-	..
+	%{!?with_opencl:-DUSE_OPENCL=OFF} \
+	%{!?with_gomp:-DUSE_OPENMP=OFF}
 
 %{__make}
 
@@ -98,7 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc doc/README doc/AUTHORS doc/LICENSE doc/TRANSLATORS
+%doc README.md RELEASE_NOTES doc/{AUTHORS,NEWS,README,TODO,TRANSLATORS,grouping.txt}
 %attr(755,root,root) %{_bindir}/darktable
 %attr(755,root,root) %{_bindir}/darktable-cli
 %attr(755,root,root) %{_bindir}/darktable-cltest
