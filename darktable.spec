@@ -34,7 +34,7 @@ BuildRequires:	fop
 BuildRequires:	gdk-pixbuf2-devel >= 2
 %{?with_gegl:BuildRequires:	gegl-devel}
 BuildRequires:	gettext
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.30
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+2-devel >= 2:2.24
