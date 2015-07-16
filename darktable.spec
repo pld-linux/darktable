@@ -15,6 +15,7 @@ Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
 # Source0-md5:	f86554329c2c809ffb009244a6f1d643
 Patch0:		cmake-glib.patch
+Patch1:		x32.patch
 URL:		http://darktable.sourceforge.net/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -82,6 +83,7 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 install -d build

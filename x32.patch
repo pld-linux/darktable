@@ -1,0 +1,13 @@
+--- darktable-1.4.2/cmake/modules/FindGTK2.cmake~	2014-04-22 16:59:56.000000000 +0000
++++ darktable-1.4.2/cmake/modules/FindGTK2.cmake	2015-07-16 20:31:39.503966178 +0000
+@@ -173,8 +173,10 @@
+         # look in debian/ubuntu multi-arch path (needs cmake >= 2.85~rc2)
+         /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}
+             /usr/local/lib64
++            /usr/local/libx32
+             /usr/local/lib
+             /usr/lib64
++            /usr/libx32
+             /usr/lib
+       /opt/local/include
+       /opt/local/lib

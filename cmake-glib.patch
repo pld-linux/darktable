@@ -5,7 +5,7 @@
    HINTS ${Glib_PKGCONF_INCLUDE_DIRS}
    PATHS /usr
 -  PATH_SUFFIXES lib/glib-2.0/include ../lib/glib-2.0/include
-+  PATH_SUFFIXES lib64/glib-2.0/include lib/glib-2.0/include ../lib/glib-2.0/include
++  PATH_SUFFIXES lib64/glib-2.0/include libx32/glib-2.0/include lib/glib-2.0/include ../lib/glib-2.0/include
  )
  
  # Finally the library itself
