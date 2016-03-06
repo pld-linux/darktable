@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	gegl	# build without GeGL
-%bcond_without	gomp	# OpenMP threading support
+%bcond_without	openmp	# OpenMP threading support
 %bcond_without	opencl	# OpenCL support
 %bcond_with	vte	# lighttable mode shell ("file manager" April fool)
 
@@ -31,7 +31,7 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	exiv2-devel
 BuildRequires:	flickcurl-devel
 BuildRequires:	fop
-%{?with_gomp:BuildRequires:	gcc-c++ >= 6:4.3}
+%{?with_openmp:BuildRequires:	gcc-c++ >= 6:4.3}
 BuildRequires:	gdk-pixbuf2-devel >= 2
 %{?with_gegl:BuildRequires:	gegl-devel}
 BuildRequires:	gettext
@@ -45,7 +45,7 @@ BuildRequires:	lcms2-devel >= 2
 BuildRequires:	lensfun-devel
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-keyring-devel
-%{?with_gomp:BuildRequires:	libgomp-devel}
+%{?with_openmp:BuildRequires:	libgomp-devel}
 BuildRequires:	libgphoto2-devel >= 2.4.5
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -93,7 +93,7 @@ cd build
 	-DBINARY_PACKAGE_BUILD=ON \
 	-DPROJECT_VERSION:STRING="%{name}-%{version}-%{release}" \
 	%{!?with_opencl:-DUSE_OPENCL=OFF} \
-	%{!?with_gomp:-DUSE_OPENMP=OFF}
+	%{!?with_openmp:-DUSE_OPENMP=OFF}
 
 %{__make}
 
