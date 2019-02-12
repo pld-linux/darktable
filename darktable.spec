@@ -8,14 +8,14 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	1.4.2
-Release:	7
+Version:	2.6.0
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
-Source0:	http://downloads.sourceforge.net/darktable/%{name}-%{version}.tar.xz
-# Source0-md5:	f86554329c2c809ffb009244a6f1d643
+Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	720d6d4313d6aff0ea34885801846f95
 Patch0:		cmake-glib.patch
-Patch1:		x32.patch
+Patch1:		rpath.patch
 URL:		http://darktable.sourceforge.net/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -58,8 +58,8 @@ BuildRequires:	libxml2-progs
 BuildRequires:	libxslt-progs
 BuildRequires:	lua52-devel >= 5.2
 BuildRequires:	openjpeg-devel >= 1.5.0
-BuildRequires:	perl-tools-pod
 BuildRequires:	pango-devel
+BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig >= 1:0.22
 BuildRequires:	sqlite3-devel >= 3
 BuildRequires:	squish-devel
@@ -88,8 +88,9 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów.
 %build
 install -d build
 cd build
-export CXXFLAGS="%{rpmcxxflags} -Wno-narrowing"
+export CXXFLAGS="%{rpmcxxflags}"
 %cmake .. \
+	-DCMAKE_BUILD_TYPE=%{!?debug:RELEASE}%{?debug:DEBUG} \
 	%{?with_vte:-DAPRIL_FOOLS=ON} \
 	-DBINARY_PACKAGE_BUILD=ON \
 	-DPROJECT_VERSION:STRING="%{name}-%{version}-%{release}" \
@@ -103,9 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
-
-%{__mv} $RPM_BUILD_ROOT%{_localedir}/pt{_PT,}
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
 %find_lang %{name} --with-gnome --with-omf
 
@@ -122,11 +121,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README.md RELEASE_NOTES doc/{AUTHORS,NEWS,README,TODO,TRANSLATORS,grouping.txt}
+%doc AUTHORS CONTRIBUTING.md README.md RELEASE_NOTES.md
+%doc doc/{TRANSLATORS.md,grouping.txt,thumbnail_color_management.txt}
+%doc build/doc/darktablerc.html
 %attr(755,root,root) %{_bindir}/darktable
+%attr(755,root,root) %{_bindir}/darktable-chart
 %attr(755,root,root) %{_bindir}/darktable-cli
 %attr(755,root,root) %{_bindir}/darktable-cltest
-%attr(755,root,root) %{_bindir}/darktable-viewer
+%attr(755,root,root) %{_bindir}/darktable-cmstest
+%attr(755,root,root) %{_bindir}/darktable-generate-cache
+%attr(755,root,root) %{_bindir}/darktable-rs-identify
 %{_datadir}/appdata/darktable.appdata.xml
 %{_datadir}/darktable
 %{_desktopdir}/darktable.desktop
@@ -145,5 +149,23 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/darktable/plugins/imageio/storage/*.so
 %attr(755,root,root) %{_libdir}/darktable/plugins/lighttable/*.so
 %attr(755,root,root) %{_libdir}/darktable/views/*.so
+%lang(de) %{_mandir}/de/man1/darktable.1*
+%lang(de) %{_mandir}/de/man1/darktable-cli.1*
+%lang(de) %{_mandir}/de/man1/darktable-cltest.1*
+%lang(de) %{_mandir}/de/man1/darktable-cmstest.1*
+%lang(de) %{_mandir}/de/man1/darktable-generate-cache.1*
+%lang(es) %{_mandir}/es/man1/darktable.1*
+%lang(es) %{_mandir}/es/man1/darktable-cli.1*
+%lang(es) %{_mandir}/es/man1/darktable-cltest.1*
+%lang(es) %{_mandir}/es/man1/darktable-cmstest.1*
+%lang(es) %{_mandir}/es/man1/darktable-generate-cache.1*
+%lang(fr) %{_mandir}/fr/man1/darktable.1*
+%lang(fr) %{_mandir}/fr/man1/darktable-cli.1*
+%lang(fr) %{_mandir}/fr/man1/darktable-cltest.1*
+%lang(fr) %{_mandir}/fr/man1/darktable-cmstest.1*
+%lang(fr) %{_mandir}/fr/man1/darktable-generate-cache.1*
 %{_mandir}/man1/darktable.1*
 %{_mandir}/man1/darktable-cli.1*
+%{_mandir}/man1/darktable-cltest.1*
+%{_mandir}/man1/darktable-cmstest.1*
+%{_mandir}/man1/darktable-generate-cache.1*
