@@ -98,6 +98,7 @@ export CXXFLAGS="%{rpmcxxflags}"
 	%{?with_vte:-DAPRIL_FOOLS=ON} \
 	-DBINARY_PACKAGE_BUILD=ON \
 	-DPROJECT_VERSION:STRING="%{version}" \
+	-DUSE_AVIF=OFF \
 	%{!?with_opencl:-DUSE_OPENCL=OFF} \
 	%{!?with_openmp:-DUSE_OPENMP=OFF}
 
