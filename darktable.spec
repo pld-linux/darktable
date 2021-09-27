@@ -77,6 +77,7 @@ Requires:	glib2 >= 1:2.30
 Requires:	gtk+3 >= 3.22
 Requires:	openjpeg >= 1.5.0
 %{?with_vte:Requires:	vte >= 0.26.0}
+ExclusiveArch:	%{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
