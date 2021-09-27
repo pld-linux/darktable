@@ -8,15 +8,14 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	2.6.0
-Release:	2
+Version:	3.6.1
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	720d6d4313d6aff0ea34885801846f95
+# Source0-md5:	90e7e28b8f1ef753e4d9aa0dec9ff9e1
 Patch0:		cmake-glib.patch
-Patch1:		rpath.patch
-URL:		http://darktable.sourceforge.net/
+URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
 BuildRequires:	OpenEXR-devel >= 2.0
@@ -25,10 +24,12 @@ BuildRequires:	SDL-devel >= 1.2
 BuildRequires:	cairo-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	colord-devel
+BuildRequires:	colord-gtk-devel
+BuildRequires:	cups-devel
 BuildRequires:	curl-devel >= 7.18.0
 BuildRequires:	dbus-glib-devel >= 0.80
 BuildRequires:	desktop-file-utils
-BuildRequires:	exiv2-devel
+BuildRequires:	exiv2-devel >= 0.24
 BuildRequires:	flickcurl-devel
 BuildRequires:	fop
 %{?with_openmp:BuildRequires:	gcc-c++ >= 6:4.3}
@@ -38,8 +39,9 @@ BuildRequires:	gettext
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.30
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+2-devel >= 2:2.24
+BuildRequires:	gtk+3-devel >= 3.22
 BuildRequires:	intltool
+BuildRequires:	iso-codes >= 4.4
 BuildRequires:	json-glib-devel
 BuildRequires:	lcms2-devel >= 2
 BuildRequires:	lensfun-devel
@@ -56,12 +58,15 @@ BuildRequires:	libwebp-devel >= 0.3.0
 BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	libxml2-progs
 BuildRequires:	libxslt-progs
-BuildRequires:	lua52-devel >= 5.2
+BuildRequires:	llvm-devel >= 12.0
+BuildRequires:	lua53-devel >= 5.3
 BuildRequires:	openjpeg-devel >= 1.5.0
 BuildRequires:	pango-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig >= 1:0.22
-BuildRequires:	sqlite3-devel >= 3
+BuildRequires:	po4a
+BuildRequires:	pugixml-devel >= 1.8
+BuildRequires:	sqlite3-devel >= 3.24
 BuildRequires:	squish-devel
 %{?with_vte:BuildRequires:	vte-devel >= 0.26.0}
 Requires(post,postun):	gtk-update-icon-cache
@@ -69,7 +74,7 @@ Requires(post,postun):	hicolor-icon-theme
 Requires:	curl >= 7.18.0
 Requires:	dbus-glib >= 0.80
 Requires:	glib2 >= 1:2.30
-Requires:	gtk+2 >= 2:2.24
+Requires:	gtk+3 >= 3.22
 Requires:	openjpeg >= 1.5.0
 %{?with_vte:Requires:	vte >= 0.26.0}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -83,7 +88,6 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 install -d build
@@ -93,7 +97,7 @@ export CXXFLAGS="%{rpmcxxflags}"
 	-DCMAKE_BUILD_TYPE=%{!?debug:RELEASE}%{?debug:DEBUG} \
 	%{?with_vte:-DAPRIL_FOOLS=ON} \
 	-DBINARY_PACKAGE_BUILD=ON \
-	-DPROJECT_VERSION:STRING="%{name}-%{version}-%{release}" \
+	-DPROJECT_VERSION:STRING="%{version}" \
 	%{!?with_opencl:-DUSE_OPENCL=OFF} \
 	%{!?with_openmp:-DUSE_OPENMP=OFF}
 
@@ -101,6 +105,8 @@ export CXXFLAGS="%{rpmcxxflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/etc/ld.so.conf.d
+echo "%{_libdir}/%{name}" >$RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}.conf
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -112,10 +118,12 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 %update_desktop_database_post
 %update_icon_cache hicolor
 
 %postun
+/sbin/ldconfig
 %update_desktop_database_postun
 %update_icon_cache hicolor
 
@@ -131,7 +139,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/darktable-cmstest
 %attr(755,root,root) %{_bindir}/darktable-generate-cache
 %attr(755,root,root) %{_bindir}/darktable-rs-identify
-%{_datadir}/appdata/darktable.appdata.xml
+/etc/ld.so.conf.d/%{name}.conf
+%{_datadir}/metainfo/darktable.appdata.xml
 %{_datadir}/darktable
 %{_desktopdir}/darktable.desktop
 %{_iconsdir}/hicolor/*/apps/darktable.png
