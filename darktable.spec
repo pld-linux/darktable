@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	3.6.1
+Version:	3.8.0
 Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	90e7e28b8f1ef753e4d9aa0dec9ff9e1
+# Source0-md5:	7164bb403ac9741e157d7763310c445a
 Patch0:		cmake-glib.patch
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
@@ -59,7 +59,7 @@ BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	libxml2-progs
 BuildRequires:	libxslt-progs
 BuildRequires:	llvm-devel >= 12.0
-BuildRequires:	lua53-devel >= 5.3
+BuildRequires:	lua54-devel >= 5.4
 BuildRequires:	openjpeg-devel >= 1.5.0
 BuildRequires:	pango-devel
 BuildRequires:	perl-tools-pod
@@ -133,7 +133,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS CONTRIBUTING.md README.md RELEASE_NOTES.md
 %doc doc/{TRANSLATORS.md,grouping.txt,thumbnail_color_management.txt}
-%doc build/doc/darktablerc.html
 %attr(755,root,root) %{_bindir}/darktable
 %attr(755,root,root) %{_bindir}/darktable-chart
 %attr(755,root,root) %{_bindir}/darktable-cli
