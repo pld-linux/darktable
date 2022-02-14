@@ -9,7 +9,7 @@ Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
 Version:	3.8.0
-Release:	3
+Release:	4
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
@@ -100,6 +100,7 @@ export CXXFLAGS="%{rpmcxxflags}"
 	-DBINARY_PACKAGE_BUILD=ON \
 	-DPROJECT_VERSION:STRING="%{version}" \
 	-DUSE_AVIF=OFF \
+	-DTESTBUILD_OPENCL_PROGRAMS=OFF \
 	%{!?with_opencl:-DUSE_OPENCL=OFF} \
 	%{!?with_openmp:-DUSE_OPENMP=OFF}
 
