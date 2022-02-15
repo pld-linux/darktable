@@ -8,17 +8,17 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	3.8.0
-Release:	4
+Version:	3.8.1
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	7164bb403ac9741e157d7763310c445a
+# Source0-md5:	e2b99efd1815d2aa266c2d4719bcc188
 Patch0:		cmake-glib.patch
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
-BuildRequires:	OpenEXR-devel >= 2.0
+BuildRequires:	OpenEXR-devel >= 3.0
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL-devel >= 1.2
 BuildRequires:	cairo-devel
@@ -26,7 +26,7 @@ BuildRequires:	cmake >= 2.6
 BuildRequires:	colord-devel
 BuildRequires:	colord-gtk-devel
 BuildRequires:	cups-devel
-BuildRequires:	curl-devel >= 7.18.0
+BuildRequires:	curl-devel >= 7.56.0
 BuildRequires:	dbus-glib-devel >= 0.80
 BuildRequires:	desktop-file-utils
 BuildRequires:	exiv2-devel >= 0.24
