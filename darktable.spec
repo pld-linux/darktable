@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	3.8.1
-Release:	2
+Version:	4.0.0
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	e2b99efd1815d2aa266c2d4719bcc188
+# Source0-md5:	9648d5c2a25703c1906288d192af5dcb
 Patch0:		cmake-glib.patch
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
@@ -22,14 +22,14 @@ BuildRequires:	OpenEXR-devel >= 3.0
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL-devel >= 1.2
 BuildRequires:	cairo-devel
-BuildRequires:	cmake >= 2.6
+BuildRequires:	cmake >= 3.10
 BuildRequires:	colord-devel
 BuildRequires:	colord-gtk-devel
 BuildRequires:	cups-devel
 BuildRequires:	curl-devel >= 7.56.0
 BuildRequires:	dbus-glib-devel >= 0.80
 BuildRequires:	desktop-file-utils
-BuildRequires:	exiv2-devel >= 0.24
+BuildRequires:	exiv2-devel >= 0.27.4
 BuildRequires:	flickcurl-devel
 BuildRequires:	fop
 %{?with_openmp:BuildRequires:	gcc-c++ >= 6:4.3}
@@ -37,7 +37,7 @@ BuildRequires:	gdk-pixbuf2-devel >= 2
 %{?with_gegl:BuildRequires:	gegl-devel}
 BuildRequires:	gettext
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.30
+BuildRequires:	glib2-devel >= 1:2.40
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+3-devel >= 3.22
 BuildRequires:	intltool
@@ -45,6 +45,7 @@ BuildRequires:	iso-codes >= 4.4
 BuildRequires:	json-glib-devel
 BuildRequires:	lcms2-devel >= 2
 BuildRequires:	lensfun-devel
+BuildRequires:	libavif-devel >= 0.7.2
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-keyring-devel
 %{?with_openmp:BuildRequires:	libgomp-devel}
@@ -66,6 +67,7 @@ BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig >= 1:0.22
 BuildRequires:	po4a
 BuildRequires:	pugixml-devel >= 1.8
+BuildRequires:	python3-jsonschema
 BuildRequires:	sqlite3-devel >= 3.24
 BuildRequires:	squish-devel
 %{?with_vte:BuildRequires:	vte-devel >= 0.26.0}
@@ -124,6 +126,15 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %update_desktop_database_post
 %update_icon_cache hicolor
+
+%banner %{name} -e << EOF
+When updating from the stable 3.8.x series, please bear in mind that
+your edits will be preserved during this process, but the new library
+and configuration will no longer be usable with 3.8.x.
+
+You are strongly advised to take a backup first.
+
+EOF
 
 %postun
 /sbin/ldconfig
