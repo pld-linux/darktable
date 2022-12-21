@@ -8,13 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	4.0.1
+Version:	4.2.0
 Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	b63acce06ef91425f13387464cdec8ca
-Patch0:		cmake-glib.patch
+# Source0-md5:	8632fd0cf34466c82d3cc57f283293e7
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -90,7 +89,6 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 install -d build
@@ -128,9 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 %update_icon_cache hicolor
 
 %banner %{name} -e << EOF
-When updating from the stable 3.8.x series, please bear in mind that
+When updating from the stable 4.0.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 3.8.x.
+and configuration will no longer be usable with 4.0.x.
 
 You are strongly advised to take a backup first.
 
