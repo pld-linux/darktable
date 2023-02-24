@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	4.2.0
-Release:	2
+Version:	4.2.1
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	8632fd0cf34466c82d3cc57f283293e7
+# Source0-md5:	ac7b028c0768f19ce9cb604beaac3d86
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -126,12 +126,15 @@ rm -rf $RPM_BUILD_ROOT
 %update_icon_cache hicolor
 
 %banner %{name} -e << EOF
+=====================================================================
+
 When updating from the stable 4.0.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
 and configuration will no longer be usable with 4.0.x.
 
 You are strongly advised to take a backup first.
 
+=====================================================================
 EOF
 
 %postun
@@ -151,9 +154,9 @@ EOF
 %attr(755,root,root) %{_bindir}/darktable-generate-cache
 %attr(755,root,root) %{_bindir}/darktable-rs-identify
 /etc/ld.so.conf.d/%{name}.conf
-%{_datadir}/metainfo/darktable.appdata.xml
+%{_datadir}/metainfo/org.darktable.darktable.appdata.xml
 %{_datadir}/darktable
-%{_desktopdir}/darktable.desktop
+%{_desktopdir}/org.darktable.darktable.desktop
 %{_iconsdir}/hicolor/*/apps/darktable.png
 %{_iconsdir}/hicolor/scalable/apps/darktable*.svg
 %dir %{_libdir}/darktable
