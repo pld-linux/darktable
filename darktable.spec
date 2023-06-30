@@ -8,18 +8,18 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	4.2.1
-Release:	3
+Version:	4.4.0
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	ac7b028c0768f19ce9cb604beaac3d86
+# Source0-md5:	132214aa5c67d21ea68940657d87309c
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
 BuildRequires:	OpenEXR-devel >= 3.0
 BuildRequires:	OpenGL-devel
-BuildRequires:	SDL-devel >= 1.2
+BuildRequires:	SDL2-devel >= 2.0
 BuildRequires:	cairo-devel
 BuildRequires:	cmake >= 3.10
 BuildRequires:	colord-devel
@@ -28,6 +28,7 @@ BuildRequires:	cups-devel
 BuildRequires:	curl-devel >= 7.56.0
 BuildRequires:	dbus-glib-devel >= 0.80
 BuildRequires:	desktop-file-utils
+BuildRequires:	exiftool
 BuildRequires:	exiv2-devel >= 0.27.4
 BuildRequires:	flickcurl-devel
 BuildRequires:	fop
@@ -38,7 +39,7 @@ BuildRequires:	gettext
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.40
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+3-devel >= 3.22
+BuildRequires:	gtk+3-devel >= 3.24.15
 BuildRequires:	intltool
 BuildRequires:	iso-codes >= 4.4
 BuildRequires:	json-glib-devel
@@ -48,12 +49,16 @@ BuildRequires:	libavif-devel >= 0.7.2
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-keyring-devel
 %{?with_openmp:BuildRequires:	libgomp-devel}
-BuildRequires:	libgphoto2-devel >= 2.4.5
+BuildRequires:	libgphoto2-devel >= 2.5
+BuildRequires:	libicu-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	libjxl-devel >= 0.7.0
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 1:2.26
+BuildRequires:	libsecret-devel
 BuildRequires:	libsoup-devel >= 2
 BuildRequires:	libtiff-devel
+BuildRequires:	libwebp-devel >= 0.3.0
 BuildRequires:	libwebp-devel >= 0.3.0
 BuildRequires:	libxml2-devel >= 1:2.6
 BuildRequires:	libxml2-progs
@@ -72,10 +77,11 @@ BuildRequires:	squish-devel
 %{?with_vte:BuildRequires:	vte-devel >= 0.26.0}
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires:	curl >= 7.18.0
+Requires:	curl >= 7.56
 Requires:	dbus-glib >= 0.80
+Requires:	exiftool
 Requires:	glib2 >= 1:2.30
-Requires:	gtk+3 >= 3.22
+Requires:	gtk+3 >= 3.24.15
 Requires:	openjpeg >= 1.5.0
 %{?with_vte:Requires:	vte >= 0.26.0}
 ExclusiveArch:	%{x8664}
@@ -115,6 +121,8 @@ echo "%{_libdir}/%{name}" >$RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}.conf
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{en@truecase,en}
+
 %find_lang %{name} --with-gnome --with-omf
 
 %clean
@@ -128,9 +136,9 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 =====================================================================
 
-When updating from the stable 4.0.x series, please bear in mind that
+When updating from the stable 4.2.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 4.0.x.
+and configuration will no longer be usable with 4.2.x.
 
 You are strongly advised to take a backup first.
 
