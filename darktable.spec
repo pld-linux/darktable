@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	4.4.2
-Release:	3
+Version:	4.6.0
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	bd26c23a2890728966dbf66ed443fee6
+# Source0-md5:	4cc458888b2c4e7bfb530482bd4c47b9
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -45,11 +45,12 @@ BuildRequires:	iso-codes >= 4.4
 BuildRequires:	json-glib-devel
 BuildRequires:	lcms2-devel >= 2
 BuildRequires:	lensfun-devel
-BuildRequires:	libavif-devel >= 0.7.2
+BuildRequires:	libavif-devel >= 0.9.2
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-keyring-devel
 %{?with_openmp:BuildRequires:	libgomp-devel}
 BuildRequires:	libgphoto2-devel >= 2.5
+BuildRequires:	libheif-devel >= 1.16.0
 BuildRequires:	libicu-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libjxl-devel >= 0.7.0
@@ -136,9 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 =====================================================================
 
-When updating from the stable 4.2.x series, please bear in mind that
+When updating from the stable 4.4.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 4.2.x.
+and configuration will no longer be usable with 4.4.x.
 
 You are strongly advised to take a backup first.
 
