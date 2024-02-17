@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	4.6.0
+Version:	4.6.1
 Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	4cc458888b2c4e7bfb530482bd4c47b9
+# Source0-md5:	e46c3dc0cf649f8b3b73f55153aabe97
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -45,7 +45,7 @@ BuildRequires:	iso-codes >= 4.4
 BuildRequires:	json-glib-devel
 BuildRequires:	lcms2-devel >= 2
 BuildRequires:	lensfun-devel
-BuildRequires:	libavif-devel >= 0.9.2
+BuildRequires:	libavif-devel >= 0.9.3
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnome-keyring-devel
 %{?with_openmp:BuildRequires:	libgomp-devel}
