@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	4.8.1
-Release:	2
+Version:	5.0.0
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	34ff16b7a086734a20a86949cf358a4a
+# Source0-md5:	f4507b055db34bf9cff581aef914ea3e
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -73,7 +73,7 @@ BuildRequires:	pkgconfig >= 1:0.22
 BuildRequires:	po4a
 BuildRequires:	pugixml-devel >= 1.8
 BuildRequires:	python3-jsonschema
-BuildRequires:	sqlite3-devel >= 3.24
+BuildRequires:	sqlite3-devel >= 3.26
 BuildRequires:	squish-devel
 %{?with_vte:BuildRequires:	vte-devel >= 0.26.0}
 Requires(post,postun):	gtk-update-icon-cache
@@ -137,9 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 =====================================================================
 
-When updating from the stable 4.6.x series, please bear in mind that
+When updating from the stable 4.8.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 4.6.x.
+and configuration will no longer be usable with 4.8.x.
 
 You are strongly advised to take a backup first.
 
