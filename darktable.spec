@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	5.0.1
+Version:	5.2.0
 Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	f6264828764c26d3840de5796d3173d3
+# Source0-md5:	cb99b8228fdfdd7b97eab767cf5e3fc8
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -71,6 +71,7 @@ BuildRequires:	pango-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig >= 1:0.22
 BuildRequires:	po4a
+BuildRequires:	portmidi-devel
 BuildRequires:	pugixml-devel >= 1.8
 BuildRequires:	python3-jsonschema
 BuildRequires:	sqlite3-devel >= 3.26
@@ -137,9 +138,9 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 =====================================================================
 
-When updating from the stable 4.8.x series, please bear in mind that
+When updating from the stable 5.0.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 4.8.x.
+and configuration will no longer be usable with 5.0.x.
 
 You are strongly advised to take a backup first.
 
