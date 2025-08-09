@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	5.2.0
-Release:	2
+Version:	5.2.1
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	cb99b8228fdfdd7b97eab767cf5e3fc8
+# Source0-md5:	7e5527686dc1d0b95e112f017885b839
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -31,7 +31,7 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	exiftool
 BuildRequires:	exiv2-devel >= 0.27.4
 BuildRequires:	flickcurl-devel
-BuildRequires:	fop
+#BuildRequires:	fop
 %{?with_openmp:BuildRequires:	gcc-c++ >= 6:4.3}
 BuildRequires:	gdk-pixbuf2-devel >= 2
 %{?with_gegl:BuildRequires:	gegl-devel}
@@ -124,6 +124,7 @@ echo "%{_libdir}/%{name}" >$RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}.conf
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/{en@truecase,en}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ko_KR
 
 %find_lang %{name} --with-gnome --with-omf
 
