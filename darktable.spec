@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	5.2.1
-Release:	4
+Version:	5.4.0
+Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	7e5527686dc1d0b95e112f017885b839
+# Source0-md5:	240e908c3fe63521a05e877c3196ee0a
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -31,14 +31,12 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	exiftool
 BuildRequires:	exiv2-devel >= 0.27.4
 BuildRequires:	flickcurl-devel
-#BuildRequires:	fop
 %{?with_openmp:BuildRequires:	gcc-c++ >= 6:4.3}
 BuildRequires:	gdk-pixbuf2-devel >= 2
 %{?with_gegl:BuildRequires:	gegl-devel}
 BuildRequires:	gettext
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.40
-#BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+3-devel >= 3.24.15
 BuildRequires:	intltool
 BuildRequires:	iso-codes >= 4.4
@@ -98,11 +96,12 @@ darktable to wirtualny podświetlany stół i ciemnia dla fotografów.
 %prep
 %setup -q
 
+%{__sed} -i '1s,/usr/bin/env bash$,%{__bash},' \
+		tools/purge_non_existing_images.sh
+
 %build
-install -d build
-cd build
 export CXXFLAGS="%{rpmcxxflags}"
-%cmake .. \
+%cmake -B build \
 	-DCMAKE_BUILD_TYPE=%{!?debug:RELEASE}%{?debug:DEBUG} \
 	%{?with_vte:-DAPRIL_FOOLS=ON} \
 	-DBINARY_PACKAGE_BUILD=ON \
@@ -112,7 +111,7 @@ export CXXFLAGS="%{rpmcxxflags}"
 	%{!?with_opencl:-DUSE_OPENCL=OFF} \
 	%{!?with_openmp:-DUSE_OPENMP=OFF}
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -139,9 +138,9 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 =====================================================================
 
-When updating from the stable 5.0.x series, please bear in mind that
+When updating from the stable 5.2.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 5.0.x.
+and configuration will no longer be usable with 5.2.x.
 
 You are strongly advised to take a backup first.
 
@@ -177,12 +176,12 @@ EOF
 %dir %{_libdir}/darktable/plugins/imageio/storage
 %dir %{_libdir}/darktable/plugins/lighttable
 %dir %{_libdir}/darktable/views
-%attr(755,root,root) %{_libdir}/darktable/libdarktable.so
-%attr(755,root,root) %{_libdir}/darktable/plugins/*.so
-%attr(755,root,root) %{_libdir}/darktable/plugins/imageio/format/*.so
-%attr(755,root,root) %{_libdir}/darktable/plugins/imageio/storage/*.so
-%attr(755,root,root) %{_libdir}/darktable/plugins/lighttable/*.so
-%attr(755,root,root) %{_libdir}/darktable/views/*.so
+%{_libdir}/darktable/libdarktable.so
+%{_libdir}/darktable/plugins/*.so
+%{_libdir}/darktable/plugins/imageio/format/*.so
+%{_libdir}/darktable/plugins/imageio/storage/*.so
+%{_libdir}/darktable/plugins/lighttable/*.so
+%{_libdir}/darktable/views/*.so
 %lang(de) %{_mandir}/de/man1/darktable.1*
 %lang(de) %{_mandir}/de/man1/darktable-cli.1*
 %lang(de) %{_mandir}/de/man1/darktable-cltest.1*
