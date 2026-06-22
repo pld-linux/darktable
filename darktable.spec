@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	5.4.1
+Version:	5.6.0
 Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	30e220695ecc17a9eec462de9a2475e1
+# Source0-md5:	b8e1fc02ed321e6b3112ebfc25cdb490
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -70,6 +70,7 @@ BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig >= 1:0.22
 BuildRequires:	po4a
 BuildRequires:	portmidi-devel
+BuildRequires:	potrace-devel
 BuildRequires:	pugixml-devel >= 1.8
 BuildRequires:	python3-jsonschema
 BuildRequires:	sqlite3-devel >= 3.26
@@ -107,6 +108,7 @@ export CXXFLAGS="%{rpmcxxflags}"
 	-DBINARY_PACKAGE_BUILD=ON \
 	-DPROJECT_VERSION:STRING="%{version}" \
 	-DUSE_AVIF=OFF \
+	-DUSE_GMIC=OFF \
 	-DTESTBUILD_OPENCL_PROGRAMS=OFF \
 	%{!?with_opencl:-DUSE_OPENCL=OFF} \
 	%{!?with_openmp:-DUSE_OPENMP=OFF}
@@ -123,7 +125,6 @@ echo "%{_libdir}/%{name}" >$RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}.conf
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/{en@truecase,en}
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ko_KR
 
 %find_lang %{name} --with-gnome --with-omf
 
@@ -138,9 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %banner %{name} -e << EOF
 =====================================================================
 
-When updating from the stable 5.2.x series, please bear in mind that
+When updating from the stable 5.4.x series, please bear in mind that
 your edits will be preserved during this process, but the new library
-and configuration will no longer be usable with 5.2.x.
+and configuration will no longer be usable with 5.4.x.
 
 You are strongly advised to take a backup first.
 
