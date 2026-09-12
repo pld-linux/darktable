@@ -8,12 +8,12 @@
 Summary:	darktable - a virtual lighttable and darkroom for photographers
 Summary(pl.UTF-8):	darktable - wirtualny podświetlany stół i ciemnia dla fotografów
 Name:		darktable
-Version:	5.6.0
+Version:	5.6.1
 Release:	1
 License:	GPL v3
 Group:		X11/Applications/Graphics
 Source0:	https://github.com/darktable-org/darktable/releases/download/release-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	b8e1fc02ed321e6b3112ebfc25cdb490
+# Source0-md5:	90a9d74feba0bf0206a003d95f40345a
 URL:		https://www.darktable.org/
 BuildRequires:	GraphicsMagick-devel
 %{?with_opencl:BuildRequires:	OpenCL-devel}
@@ -125,6 +125,7 @@ echo "%{_libdir}/%{name}" >$RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}.conf
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}
 
 %{__mv} $RPM_BUILD_ROOT%{_localedir}/{en@truecase,en}
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{ko_KR,ko}
 
 %find_lang %{name} --with-gnome --with-omf
 
